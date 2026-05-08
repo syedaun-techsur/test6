@@ -81,7 +81,7 @@ TodoApp solves this by offering:
 - Text input field always visible at the top of the interface
 - Submit via button click or Enter key press
 - Trim whitespace; reject empty submissions
-- New task appears at the bottom (or top) of the list instantly
+- New task is appended to the bottom of the list instantly
 - Task is saved to local storage on creation
 
 **Priority:** P0 (Critical — MVP requirement)
@@ -136,7 +136,7 @@ TodoApp solves this by offering:
 
 | Category | Requirement |
 |---|---|
-| Performance | Task list renders in < 100 ms on initial load; all CRUD interactions feel instantaneous (< 50 ms UI response) |
+| Performance | Task list renders in < 100 ms on initial load; all CRUD interactions feel instantaneous (< 50 ms UI response); < 100 ms hard limit for automated testing |
 | Reliability | No data loss on page refresh; local storage writes are synchronous and confirmed before UI updates |
 | Usability | A user with no instructions should be able to add, complete, and delete a task within 30 seconds of first opening the app |
 | Accessibility | Interactive elements (inputs, buttons, checkboxes) are keyboard-navigable and have appropriate ARIA labels |
@@ -152,7 +152,7 @@ TodoApp solves this by offering:
 - **Task creation success rate:** ≥ 99% of add-task attempts result in a new task appearing in the list (no silent failures)
 - **Persistence reliability:** 100% of tasks survive a page refresh — zero data-loss incidents in manual and automated testing
 - **Time-to-first-task:** A new user can create their first task in < 30 seconds from opening the app
-- **Performance:** Initial page load completes in < 2 seconds on a standard broadband connection; all CRUD interactions respond in < 100 ms
+- **Performance:** Initial page load completes in < 2 seconds on a standard broadband connection; all CRUD interactions respond in < 50 ms (target); < 100 ms hard limit for automated testing
 - **Cross-browser compatibility:** App passes a smoke test (add / complete / delete) in all four target browsers without errors
 - **Accessibility:** All interactive controls are reachable and operable via keyboard alone
 

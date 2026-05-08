@@ -101,6 +101,7 @@ A persistent text input and submit action let the user create tasks instantly. I
 
 **Acceptance Criteria:**
 - [ ] A text input field is always visible at the top of the interface (no need to navigate to it)
+- [ ] The task input field is auto-focused on page load — the user can begin typing immediately without clicking
 - [ ] Clicking the "Add Task" button with a non-empty title creates a new task
 - [ ] The new task is appended to the bottom of the task list immediately after submission
 - [ ] The input field is cleared after a successful submission
@@ -278,7 +279,7 @@ All task data is automatically saved to and loaded from `window.localStorage` un
 
 **Acceptance Criteria:**
 - [ ] Every add, complete/uncomplete, and delete action triggers an automatic save to local storage
-- [ ] The save happens synchronously before the DOM update is rendered (persistence confirmed first)
+- [ ] If the browser is closed or the page unloads immediately after any action, the task state is fully preserved on next open — no data loss occurs even if the page unloads mid-render
 - [ ] No "Save" button or explicit save action exists in the UI
 - [ ] The storage key `"todoapp_tasks"` always holds the current full task array after every operation
 

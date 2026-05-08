@@ -172,6 +172,7 @@ Uses the `Task` object and the `"todoapp_tasks"` storage key — see `Y0-schema.
 ### Sub-Features
 
 - Always-visible text input field for entering a task title
+- Auto-focus on the text input on initial page load (cursor ready without any click)
 - Submit via "Add Task" button click
 - Submit via Enter key press while input is focused
 - Input validation (non-empty after trim)
@@ -183,15 +184,16 @@ Uses the `Task` object and the `"todoapp_tasks"` storage key — see `Y0-schema.
 
 ### Process
 
-1. User types a title into the text input (`<input type="text" id="task-input">`).
-2. User triggers the Submit Action (button click or Enter key).
-3. App reads `inputElement.value` and trims whitespace → `trimmedTitle`.
-4. **Validation check:** If `trimmedTitle === ""`, the app:
+1. On `DOMContentLoaded`, after `loadTasks()` and `renderTaskList()` complete, the app calls `inputElement.focus()` to auto-focus the task input field — the user can begin typing immediately without clicking.
+2. User types a title into the text input (`<input type="text" id="task-input">`).
+3. User triggers the Submit Action (button click or Enter key).
+4. App reads `inputElement.value` and trims whitespace → `trimmedTitle`.
+5. **Validation check:** If `trimmedTitle === ""`, the app:
    a. Does NOT create a task.
    b. Adds a visible validation error message below the input: `"Task title cannot be empty."` (or equivalent).
    c. Returns without modifying the task array or local storage.
    d. Leaves the (empty) input focused so the user can correct it.
-5. If `trimmedTitle` is valid:
+6. If `trimmedTitle` is valid:
    a. App generates a new `id` (UUID v4 or `Date.now().toString(36)` — unique, non-empty string).
    b. App constructs a new Task object: `{ id, title: trimmedTitle, completed: false, createdAt: Date.now() }`.
    c. App appends the Task to the in-memory `tasks` array: `tasks.push(newTask)`.
@@ -200,7 +202,7 @@ Uses the `Task` object and the `"todoapp_tasks"` storage key — see `Y0-schema.
    f. App clears the input: `inputElement.value = ""`.
    g. App removes any visible validation error message from a prior failed submission.
    h. App returns focus to the input field so the user can immediately add another task.
-6. The new task appears at the bottom of the rendered list (appended in array order).
+7. The new task appears at the bottom of the rendered list (appended in array order).
 
 ---
 
@@ -554,7 +556,7 @@ Removes an item from the persisted `Task[]` array — see `Y0-schema.md §Task` 
 | Corrupt JSON on load | Reset key, return `[]`; log warning | `STORAGE_CORRUPT` | None (empty state shown) |
 | Parsed value is not an array | Reset key, return `[]`; log warning | `STORAGE_CORRUPT` | None (empty state shown) |
 | `QuotaExceededError` on save | Throw `STORAGE_QUOTA_EXCEEDED`; caller reverts + alerts | `STORAGE_QUOTA_EXCEEDED` | `"Storage full. Delete some tasks to free space."` |
-| Other error on save | Throw `STORAGE_WRITE_FAILED`; caller reverts + alerts | `STORAGE_WRITE_FAILED` | `"Could not save. Please try again."` |
+| Other error on save | Throw `STORAGE_WRITE_FAILED`; caller reverts + alerts | `STORAGE_WRITE_FAILED` | Caller-specific (see Y2): `"Could not save task."` / `"Could not save change."` / `"Could not delete task."` + `" Please try again."` |
 
 ---
 
@@ -979,7 +981,7 @@ TodoApp v1 has no external third-party service integrations. The only integratio
 | Attribute | Detail |
 |-----------|--------|
 | **API** | `document` event model |
-| **Events used** | `DOMContentLoaded` (page init), `click` (delete button), `change` (checkbox), `keydown` (Enter key on input) |
+| **Events used** | `DOMContentLoaded` (page init, triggers auto-focus of input after render), `click` (delete button), `change` (checkbox), `keydown` (Enter key on input) |
 | **Availability** | Universal — present in all target browsers |
 | **Unavailability scenario** | JavaScript disabled entirely — app does not function. No graceful fallback possible (JS-only app by design). |
 | **Used by** | F0 (page init), F1 (Enter key + button click), F2 (checkbox change), F3 (delete button click) |

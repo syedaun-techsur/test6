@@ -26,7 +26,11 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. Each task in the list displays its title and a visual indicator of whether it is complete (checkbox + strikethrough)
   3. The app shell (HTML, CSS, JS modules, build tooling) exists and can be served as static files
   4. Reloading the page re-renders the same list from localStorage without data loss
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 01-01-PLAN.md — HTML scaffold + CSS styling (app shell)
+- [ ] 01-02-PLAN.md — JS modules: storage, renderer, entry point wiring
 
 ### Phase 2: Full CRUD & Persistence
 **Goal**: Users can add, complete, and delete tasks — every action is reflected immediately in the UI and persisted automatically to localStorage
@@ -47,5 +51,5 @@ Phases execute in numeric order: 1 → 2
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Task Display | 0/TBD | Not started | - |
+| 1. Foundation & Task Display | 0/2 | Not started | - |
 | 2. Full CRUD & Persistence | 0/TBD | Not started | - |

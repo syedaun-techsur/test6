@@ -18,12 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 ## Phase Details
 
 ### Phase 1: Foundation & Task Display
-<<<<<<< HEAD
 **Status**: In Progress
-**Last Updated**: 2026-05-30T17:32:43Z
-=======
-**Status**: In Progress
->>>>>>> 50ea73a (docs: update planning artifacts [pivota-auto])
 **Goal**: A working static app exists in the browser — users can open it and see their task list (or an empty-state prompt)
 **Depends on**: Nothing (first phase)
 **Requirements**: F0

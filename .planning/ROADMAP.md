@@ -12,12 +12,13 @@ Two phases deliver a complete, working to-do app. Phase 1 scaffolds the project 
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: Foundation & Task Display** - Project scaffolded; task list renders from localStorage on load
+- [x] **Phase 1: Foundation & Task Display** - Project scaffolded; task list renders from localStorage on load
 - [ ] **Phase 2: Full CRUD & Persistence** - Add, complete, and delete tasks with auto-save to localStorage
 
 ## Phase Details
 
 ### Phase 1: Foundation & Task Display
+**Status**: Complete — 2026-05-11
 **Goal**: A working static app exists in the browser — users can open it and see their task list (or an empty-state prompt)
 **Depends on**: Nothing (first phase)
 **Requirements**: F0
@@ -29,8 +30,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 **Plans**: 2 plans
 
 Plans:
-- [ ] 01-01-PLAN.md — HTML scaffold + CSS styling (app shell)
-- [ ] 01-02-PLAN.md — JS modules: storage, renderer, entry point wiring
+- [x] 01-01-PLAN.md — HTML scaffold + CSS styling (app shell)
+- [x] 01-02-PLAN.md — JS modules: storage, renderer, entry point wiring
 
 ### Phase 2: Full CRUD & Persistence
 **Goal**: Users can add, complete, and delete tasks — every action is reflected immediately in the UI and persisted automatically to localStorage
@@ -51,5 +52,5 @@ Phases execute in numeric order: 1 → 2
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Task Display | 0/2 | Not started | - |
+| 1. Foundation & Task Display | 2/2 | Complete | 2026-05-11 |
 | 2. Full CRUD & Persistence | 0/TBD | Not started | - |

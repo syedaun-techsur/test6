@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 ## Phase Details
 
 ### Phase 1: Foundation & Task Display
-**Status**: In Progress
+**Status**: awaiting verify
 **Goal**: A working static app exists in the browser — users can open it and see their task list (or an empty-state prompt)
 **Depends on**: Nothing (first phase)
 **Requirements**: F0

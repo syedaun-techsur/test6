@@ -31,7 +31,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 Plans:
 - [x] 01-01-PLAN.md — HTML scaffold + CSS styling (app shell)
-- [x] 01-02-PLAN.md — JS modules: storage, renderer, entry point wiring
+- [ ] 01-02-PLAN.md — JS modules: storage, renderer, entry point wiring
 
 ### Phase 2: Full CRUD & Persistence
 **Goal**: Users can add, complete, and delete tasks — every action is reflected immediately in the UI and persisted automatically to localStorage
@@ -52,5 +52,5 @@ Phases execute in numeric order: 1 → 2
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Task Display | 0/2 | Not started | - |
+| 1. Foundation & Task Display | 1/2 | In Progress | - |
 | 2. Full CRUD & Persistence | 0/TBD | Not started | - |

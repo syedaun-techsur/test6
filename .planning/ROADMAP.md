@@ -18,7 +18,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 ## Phase Details
 
 ### Phase 1: Foundation & Task Display
-**Status**: In Progress
+**Status**: Complete — 2026-05-15
 **Goal**: A working static app exists in the browser — users can open it and see their task list (or an empty-state prompt)
 **Depends on**: Nothing (first phase)
 **Requirements**: F0
@@ -31,7 +31,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 
 Plans:
 - [x] 01-01-PLAN.md — HTML scaffold + CSS styling (app shell)
-- [ ] 01-02-PLAN.md — JS modules: storage, renderer, entry point wiring
+- [x] 01-02-PLAN.md — JS modules: storage, renderer, entry point wiring
 
 ### Phase 2: Full CRUD & Persistence
 **Goal**: Users can add, complete, and delete tasks — every action is reflected immediately in the UI and persisted automatically to localStorage
@@ -52,5 +52,5 @@ Phases execute in numeric order: 1 → 2
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Task Display | 1/2 | In Progress | - |
+| 1. Foundation & Task Display | 2/2 | ✓ Complete | 2026-05-15 |
 | 2. Full CRUD & Persistence | 0/TBD | Not started | - |

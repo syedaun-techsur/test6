@@ -7,23 +7,23 @@
 
 ### Task List
 
-- [ ] **F0**: User can view all tasks in a list with completion status indicators
+- [x] **F0**: User can view all tasks in a list with completion status indicators
 
 ### Task Creation
 
-- [ ] **F1**: User can add a new task by typing a title and submitting (button click or Enter key)
+- [x] **F1**: User can add a new task by typing a title and submitting (button click or Enter key)
 
 ### Task Completion
 
-- [ ] **F2**: User can mark a task as complete/incomplete via checkbox toggle
+- [x] **F2**: User can mark a task as complete/incomplete via checkbox toggle
 
 ### Task Deletion
 
-- [ ] **F3**: User can delete a task permanently with a single click (no confirmation dialog)
+- [x] **F3**: User can delete a task permanently with a single click (no confirmation dialog)
 
 ### Persistence
 
-- [ ] **F4**: Tasks persist across page refresh via browser localStorage (auto-save on every mutation, auto-load on page start)
+- [x] **F4**: Tasks persist across page refresh via browser localStorage (auto-save on every mutation, auto-load on page start)
 
 ## v2 Requirements
 
@@ -48,11 +48,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| F0 | Phase 1 | Pending |
-| F1 | Phase 2 | Pending |
-| F2 | Phase 2 | Pending |
-| F3 | Phase 2 | Pending |
-| F4 | Phase 2 | Pending |
+| F0 | Phase 1 | Complete |
+| F1 | Phase 2 | Complete |
+| F2 | Phase 2 | Complete |
+| F3 | Phase 2 | Complete |
+| F4 | Phase 2 | Complete |
 
 **Coverage:**
 - v1 requirements: 5 total

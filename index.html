@@ -10,11 +10,12 @@
   <div class="container">
     <h1>My Tasks</h1>
 
-    <!-- Input area (non-functional in Phase 1 — wired in Phase 2) -->
+    <!-- Input area -->
     <div class="input-area">
-      <input type="text" id="new-task-input" placeholder="Add a new task…" disabled>
-      <button id="add-task-btn" disabled>Add</button>
+      <input type="text" id="new-task-input" placeholder="Add a new task…">
+      <button id="add-task-btn">Add</button>
     </div>
+    <p id="validation-msg" class="validation-msg" hidden>Task title cannot be empty.</p>
 
     <!-- Task list -->
     <ul id="task-list" aria-label="Task list">

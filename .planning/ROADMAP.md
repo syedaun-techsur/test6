@@ -13,7 +13,7 @@ Two phases deliver a complete, working to-do app. Phase 1 scaffolds the project 
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation & Task Display** - Project scaffolded; task list renders from localStorage on load
-- [ ] **Phase 2: Full CRUD & Persistence** - Add, complete, and delete tasks with auto-save to localStorage
+- [x] **Phase 2: Full CRUD & Persistence** - Add, complete, and delete tasks with auto-save to localStorage
 
 ## Phase Details
 
@@ -35,7 +35,8 @@ Plans:
 - [x] 01-02-PLAN.md — JS modules: storage, renderer, entry point wiring
 
 ### Phase 2: Full CRUD & Persistence
-**Status**: executing
+**Status**: completed (2026-05-29)
+**Last Updated**: 2026-05-29T00:00:00Z
 **Goal**: Users can add, complete, and delete tasks — every action is reflected immediately in the UI and persisted automatically to localStorage
 **Depends on**: Phase 1
 **Requirements**: F1, F2, F3, F4
@@ -48,8 +49,8 @@ Plans:
 **Plans**: 2 plans
 
 Plans:
-- [ ] 02-01-PLAN.md — Enable input area + add task handler (F1 + F4 write)
-- [ ] 02-02-PLAN.md — Toggle complete + delete task + event delegation (F2 + F3 + F4)
+- [x] 02-01-PLAN.md — Enable input area + add task handler (F1 + F4 write)
+- [x] 02-02-PLAN.md — Toggle complete + delete task + event delegation (F2 + F3 + F4)
 
 ## Progress
 
@@ -59,4 +60,4 @@ Phases execute in numeric order: 1 → 2
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & Task Display | 2/2 | ✓ Complete | 2026-05-15 |
-| 2. Full CRUD & Persistence | 0/2 | Not started | - |
+| 2. Full CRUD & Persistence | 2/2 | ✓ Complete | 2026-05-29 |

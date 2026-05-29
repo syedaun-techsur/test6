@@ -1,9 +1,9 @@
 ---
 status: complete
 phase: 01-foundation-task-display
-source: 01-01-SUMMARY.md
-started: 2026-05-12T16:37:50Z
-updated: 2026-05-12T16:39:30Z
+source: 01-01-SUMMARY.md, 01-02-SUMMARY.md
+started: 2026-05-29T18:10:00.000Z
+updated: 2026-05-29T18:15:00.000Z
 ---
 
 ## Current Test
@@ -12,24 +12,24 @@ updated: 2026-05-12T16:39:30Z
 
 ## Tests
 
-### 1. App Shell Renders in Browser
-expected: Opening index.html in a browser shows the app — a white card centered on a grey background, with "My Tasks" heading, a text input field, and an "Add" button
+### 1. App Shell Loads in Browser
+expected: Opening index.html in a browser shows the app with a heading, an input field, and an "Add" button. No blank page or broken layout.
 result: pass
 
-### 2. Input Area Is Disabled
-expected: The text input and "Add" button are visible but not interactive — the input cannot be typed in, and the button appears dimmed (50% opacity) with a not-allowed cursor
+### 2. Empty State Message
+expected: With no tasks in localStorage, the list area shows "No tasks yet — add one above!" (or similar empty-state text). The task list itself is empty.
 result: pass
 
-### 3. Empty State Is Hidden
-expected: No empty-state message is visible on load — the task list area appears blank (the "No tasks yet — add one above!" message is hidden until JS wires it up)
+### 3. Task List Renders from localStorage
+expected: If localStorage contains tasks (key 'todo-tasks'), opening the app displays those tasks as a list — each task shows its title.
 result: pass
 
-### 4. Task Item Visual Styling
-expected: Each task item row would show a checkbox, title text, and a red delete button in a horizontal flex row with a bottom border separator
+### 4. Completed Task Styling
+expected: A task that is marked completed (completed: true in localStorage) shows a checkbox checked and the task title with a strikethrough.
 result: pass
 
-### 5. Completed Task Styling
-expected: A task title with the class "completed" displays with strikethrough text and muted grey color (#999)
+### 5. Page Reload Preserves List
+expected: After a page refresh, the same task list is shown again — no data loss between reloads.
 result: pass
 
 ## Summary

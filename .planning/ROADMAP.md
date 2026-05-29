@@ -18,7 +18,8 @@ Decimal phases appear between their surrounding integers in numeric order.
 ## Phase Details
 
 ### Phase 1: Foundation & Task Display
-**Status**: Complete — 2026-05-11
+**Status**: completed (2026-05-29)
+**Last Updated**: 2026-05-29T16:30:07Z
 **Goal**: A working static app exists in the browser — users can open it and see their task list (or an empty-state prompt)
 **Depends on**: Nothing (first phase)
 **Requirements**: F0
@@ -52,5 +53,5 @@ Phases execute in numeric order: 1 → 2
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. Foundation & Task Display | 2/2 | Complete | 2026-05-11 |
+| 1. Foundation & Task Display | 2/2 | ✓ Complete | 2026-05-15 |
 | 2. Full CRUD & Persistence | 0/TBD | Not started | - |

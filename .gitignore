@@ -116,3 +116,6 @@ AGENTS.md
 .opencode.session
 .pivota/
 # <<< pivota:gitignore-managed
+.nuxt/
+.vite/
+.turbo/

@@ -2,30 +2,28 @@
 phase: 01-foundation-task-display
 plan: 02
 subsystem: ui
-
-tags: [vanilla-js, es-modules, localstorage, dom-rendering, to-do]
+tags: [vanilla-js, localstorage, es-modules, dom-rendering, task-list]
 
 # Dependency graph
 requires:
   - phase: 01-foundation-task-display
-    plan: 01
-    provides: "index.html app shell with id=task-list and id=empty-state DOM anchors"
+    provides: "index.html with id='task-list', id='empty-state' DOM contracts from Plan 01"
 provides:
-  - "storage.js with loadTasks() and saveTasks() using localStorage key 'todo-tasks'"
-  - "renderer.js with renderTasks(tasks) populating #task-list and toggling #empty-state"
-  - "app.js entry point wiring storage + renderer on DOMContentLoaded"
-  - "Complete read path: open app → load from localStorage → render task list"
+  - storage.js — loadTasks()/saveTasks() localStorage utilities with 'todo-tasks' key
+  - renderer.js — renderTasks(tasks) DOM rendering with empty-state toggling and completed styling
+  - app.js — DOMContentLoaded entry point wiring storage + renderer
+  - Complete read path: open app → tasks loaded from localStorage → rendered to DOM
 affects:
-  - "02-task-mutations (uses same 'todo-tasks' key, same data shape, same DOM IDs, app.js entry point extended)"
+  - 02 (Phase 2 mutation path: add/complete/delete wired into app.js, storage.js, renderer.js)
 
 # Tech tracking
 tech-stack:
   added: []
   patterns:
-    - "ES module imports with relative paths and .js extension (required for native browser modules)"
-    - "DOMContentLoaded listener in entry point before querying DOM"
-    - "hidden HTML attribute toggled by JS (not display:none) for empty state"
-    - "data-id attribute on task <li> for Phase 2 mutation identification"
+    - "ES module imports with explicit .js extensions (required for native browser modules)"
+    - "localStorage read/write behind try/catch — returns [] on any failure, never null/undefined"
+    - "hidden attribute toggling on #empty-state (not CSS display manipulation)"
+    - "data-id attribute on <li> elements as mutation handle for Phase 2"
 
 key-files:
   created:
@@ -35,87 +33,95 @@ key-files:
   modified: []
 
 key-decisions:
-  - "Storage key fixed as 'todo-tasks' — Phase 2 will use the same key for continuity"
-  - "Task data shape: { id: string, title: string, completed: boolean } — defined once in storage.js JSDoc"
-  - "Checkbox and delete button rendered but event handlers deferred to Phase 2 (noted in comments)"
-  - "renderer.js clears list.innerHTML before every render to prevent duplicate items on re-render"
+  - "Task shape defined once in storage.js: { id: string, title: string, completed: boolean }"
+  - "localStorage key 'todo-tasks' established here — Phase 2 uses same key for continuity"
+  - "Checkbox and delete button event handlers intentionally omitted (Phase 2) with inline comments"
+  - "app.js uses DOMContentLoaded (not window.load) to render as early as DOM is ready"
 
 patterns-established:
-  - "Pure utility modules: storage.js has zero DOM access; renderer.js has zero storage access"
-  - "Entry point (app.js) is the only file that imports from multiple modules"
-  - "renderTasks() is idempotent: safe to call multiple times, always produces correct state"
+  - "Storage module pattern: pure utility with no DOM access, wraps localStorage with error handling"
+  - "Renderer clears innerHTML before each render — prevents duplicates on re-render"
+  - "ES module file graph: app.js → storage.js + renderer.js (star topology, no circular deps)"
 
 # Metrics
 duration: 1min
-completed: 2026-05-15
+completed: 2026-05-29
 ---
 
-# Phase 1 Plan 02: JavaScript Modules (Storage + Renderer + Entry Point) Summary
+# Phase 1 Plan 02: JS Modules (storage, renderer, app) Summary
 
-**ES module read path: storage.js (localStorage I/O), renderer.js (DOM rendering), app.js (entry point) — app renders tasks or empty state on page load**
+**Three ES modules delivering the complete read path: loadTasks() from localStorage, renderTasks() to DOM with empty-state toggle and completed strikethrough, wired by app.js on DOMContentLoaded**
 
 ## Performance
 
-- **Duration:** ~1 min
-- **Started:** 2026-05-15T14:03:35Z
-- **Completed:** 2026-05-15T14:04:14Z
+- **Duration:** 1 min
+- **Started:** 2026-05-29T18:03:29Z
+- **Completed:** 2026-05-29T18:04:43Z
 - **Tasks:** 2
 - **Files modified:** 3
 
 ## Accomplishments
-- Created `storage.js` with `loadTasks()` / `saveTasks()` using key `'todo-tasks'`, returns `[]` on empty/corrupt data
-- Created `renderer.js` with `renderTasks(tasks)` — clears list, toggles empty-state `hidden` attribute, renders task items with checkbox (checked state), span (completed class for strikethrough), and delete button with `data-id`
-- Created `app.js` entry point that imports from both modules and wires `renderTasks(loadTasks())` on `DOMContentLoaded`
-- All 5 project files now exist; complete read path is functional
+
+- Created `storage.js` with `loadTasks()` and `saveTasks()` — localStorage utilities using key `'todo-tasks'`, returns `[]` on any failure (empty, missing, or corrupted data)
+- Created `renderer.js` with `renderTasks(tasks)` — clears `#task-list`, toggles `#empty-state` hidden attribute, renders each task as `<li>` with checkbox, title (`.task-title.completed` for strikethrough), and delete button (Phase 2 handlers noted inline)
+- Created `app.js` — entry point importing both modules, calls `renderTasks(loadTasks())` on `DOMContentLoaded`
+- Complete read path functional: opening `index.html` shows empty-state with no data, renders tasks with correct completed state (checkbox + strikethrough) when localStorage contains tasks
 
 ## Task Commits
 
 Each task was committed atomically:
 
-1. **Task 1: Create storage.js** - `70ba55a` (feat)
-2. **Task 2: Create renderer.js and app.js** - `2902ad2` (feat)
+1. **Task 1: Create storage.js — localStorage read/write utilities** — `5352bf0` (feat)
+2. **Task 2: Create renderer.js and app.js — DOM rendering and entry point** — `bcc7ad1` (feat)
 
-**Plan metadata:** _(docs commit follows)_
+**Plan metadata:** (docs commit follows)
 
 ## Files Created/Modified
-- `storage.js` — `loadTasks()` reads from localStorage key `'todo-tasks'`, returns `[]` on empty/missing/corrupt; `saveTasks(tasks)` persists array
-- `renderer.js` — `renderTasks(tasks)` clears `#task-list`, sets `emptyState.hidden`, renders `<li>` items with checkbox, title span (`.completed` class for strikethrough), and delete button
-- `app.js` — entry point importing from `./storage.js` and `./renderer.js`, calls `renderTasks(loadTasks())` on `DOMContentLoaded`
+
+- `storage.js` — Pure utility module (no DOM); exports `loadTasks()` returning `Task[]` from `'todo-tasks'` key, `saveTasks(tasks)` persisting `Task[]`; try/catch guards JSON.parse
+- `renderer.js` — Exports `renderTasks(tasks)`; clears list innerHTML, toggles `emptyState.hidden`, renders `<li class="task-item" data-id>` with checkbox, `.task-title` span (+ `completed` class), `.delete-btn` button
+- `app.js` — Imports from `./storage.js` and `./renderer.js`; `DOMContentLoaded` listener calls `renderTasks(loadTasks())`
 
 ## Decisions Made
-- Storage key `'todo-tasks'` — fixed constant so Phase 2 reads the same data
-- Task data shape `{ id: string, title: string, completed: boolean }` — documented in JSDoc on `loadTasks()`, used throughout
-- Checkbox and delete button event handlers deliberately omitted with `// Phase 2` comments — plan specifies these are not wired yet
-- `renderer.js` always clears `list.innerHTML = ''` first — makes `renderTasks` safely re-callable after mutations in Phase 2
+
+- **Task data shape** defined in storage.js: `{ id: string, title: string, completed: boolean }` — single source of truth used across all three modules
+- **localStorage key `'todo-tasks'`** established here — Phase 2 uses the same key for seamless continuity
+- **Checkbox + delete button rendered but not wired** — stub elements with `// Phase 2` comments so Phase 2 only needs to add event listeners, not restructure DOM
+- **`DOMContentLoaded`** used (not `window.load`) for earliest possible render without waiting for images/fonts
 
 ## Deviations from Plan
 
-None - plan executed exactly as written.
+None — plan executed exactly as written.
 
 ## Issues Encountered
-None — all files created exactly as specified. The `document is not defined` Node.js error during verification was expected (browser DOM API not available in Node); syntax-only check (`node --check`) confirmed all three files are valid ES module syntax.
+
+None — all files created on first pass, all verification checks passed.
+
+Note: `node --input-type=module < app.js` produces `ReferenceError: document is not defined` — this is expected because `document` is a browser global not available in Node.js. The `--check` flag confirms no syntax errors. The file is correct for browser execution.
 
 ## User Setup Required
-None - no external service configuration required.
+
+None — no external service configuration required.
 
 ## Next Phase Readiness
-- All 5 files exist and form a complete, working static to-do app read path
-- Phase 2 will extend `app.js` with event listeners for `#add-task-btn`, `#new-task-input`, checkbox toggles, and delete buttons
-- `renderer.js` is already Phase-2-ready: each task `<li>` has `data-id`, checkbox and delete button are rendered awaiting event handlers
-- `storage.js` `saveTasks()` is ready for Phase 2 writes
-- localStorage key `'todo-tasks'` and task data shape are established — Phase 2 must use the same
+
+- All 5 files exist: `index.html`, `styles.css`, `storage.js`, `renderer.js`, `app.js`
+- Read path complete: `app.js` → `loadTasks()` → `renderTasks()` → DOM
+- Phase 2 mutation path ready to plug into: `app.js` (add event listeners for add-btn, checkbox, delete-btn), `storage.js` (call `saveTasks()` after mutations), `renderer.js` (re-render after each mutation)
+- `data-id` on each `<li>` provides mutation handle for Phase 2
+- `'todo-tasks'` storage key established — Phase 2 uses it unchanged
 
 ---
 *Phase: 01-foundation-task-display*
-*Completed: 2026-05-15*
+*Completed: 2026-05-29*
 
 ## Self-Check: PASSED
 
-- ✅ `storage.js` — exists on disk
-- ✅ `renderer.js` — exists on disk
-- ✅ `app.js` — exists on disk
-- ✅ `index.html` — exists on disk
-- ✅ `styles.css` — exists on disk
-- ✅ `01-02-SUMMARY.md` — exists on disk
-- ✅ Commit `70ba55a` — feat(01-02): create storage.js with localStorage read/write utilities
-- ✅ Commit `2902ad2` — feat(01-02): create renderer.js and app.js entry point
+- FOUND: storage.js ✓
+- FOUND: renderer.js ✓
+- FOUND: app.js ✓
+- FOUND: index.html ✓
+- FOUND: styles.css ✓
+- FOUND commit: 5352bf0 (Task 1) ✓
+- FOUND commit: bcc7ad1 (Task 2) ✓
+- FOUND: 01-02-SUMMARY.md ✓

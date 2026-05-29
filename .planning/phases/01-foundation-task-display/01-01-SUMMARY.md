@@ -2,24 +2,23 @@
 phase: 01-foundation-task-display
 plan: 01
 subsystem: ui
-
-tags: [html, css, vanilla-js, to-do, app-shell]
+tags: [html, css, vanilla-js, layout, task-list]
 
 # Dependency graph
 requires: []
 provides:
-  - "index.html app shell with semantic HTML structure and all required element IDs"
-  - "styles.css complete visual styling for all app states (normal, completed, empty)"
+  - App shell HTML (index.html) with all required element IDs for renderer.js
+  - Complete CSS visual styling for all task states (normal, completed, empty)
 affects:
-  - "01-02 (JS modules depend on id=\"task-list\" and id=\"empty-state\" from this plan)"
+  - 01-02 (JS wiring depends on id="task-list", id="empty-state", id="new-task-input", id="add-task-btn")
 
 # Tech tracking
 tech-stack:
   added: []
   patterns:
-    - "Vanilla HTML/CSS/JS — no build tooling"
-    - "ES module script tag (<script type=\"module\">)"
-    - "hidden attribute on empty-state (no CSS display:none needed)"
+    - "Vanilla HTML/CSS/JS — no build tooling, direct browser loading"
+    - "CSS: flexbox layout for input row and task items, hidden attribute for empty-state visibility"
+    - "Semantic IDs as DOM contracts for JavaScript modules (task-list, empty-state, new-task-input, add-task-btn)"
 
 key-files:
   created:
@@ -28,80 +27,87 @@ key-files:
   modified: []
 
 key-decisions:
-  - "Used system sans-serif font stack (-apple-system, BlinkMacSystemFont, ...) for native feel"
-  - "Chose #4a90e2 as primary blue for buttons and focus rings"
-  - "delete-btn styled but not hidden — renderer.js can attach it without CSS changes"
-  - "Empty state visibility managed by HTML hidden attribute, not CSS display:none"
+  - "Used system font stack (-apple-system, BlinkMacSystemFont, Segoe UI, Roboto) for native feel without extra assets"
+  - "Empty-state visibility controlled by HTML hidden attribute (not CSS display:none) as specified in plan"
+  - "Delete button styled but not disabled — defined so renderer.js can attach it in later plans"
+  - "Blue accent color #4a90e2 chosen for button and checkbox accent-color"
 
 patterns-established:
-  - "Container pattern: max-width 480px, centered, white bg, subtle shadow"
-  - "Task item: flexbox row with checkbox, title (flex-grow), delete button"
-  - "Completed state: .task-title.completed adds line-through + muted color #999"
+  - "DOM contract pattern: element IDs in HTML are the integration surface for JS modules"
+  - "Phase 1 = static shell; Phase 2 = JS wiring; disabled inputs signal Phase 1 boundaries"
 
 # Metrics
 duration: 1min
-completed: 2026-05-12
+completed: 2026-05-29
 ---
 
-# Phase 1 Plan 01: App Shell (HTML + CSS) Summary
+# Phase 1 Plan 01: App Shell HTML + CSS Summary
 
-**Static app shell with semantic HTML (id="task-list", id="empty-state") and full CSS styling for task items, completion state, and empty state**
+**Semantic HTML shell with id-based DOM contracts and complete CSS styling covering all task states (normal, completed, delete, empty)**
 
 ## Performance
 
 - **Duration:** 1 min
-- **Started:** 2026-05-12T16:34:42Z
-- **Completed:** 2026-05-12T16:35:20Z
+- **Started:** 2026-05-29T18:00:20Z
+- **Completed:** 2026-05-29T18:01:33Z
 - **Tasks:** 2
 - **Files modified:** 2
 
 ## Accomplishments
-- Created `index.html` with all 4 required element IDs (`task-list`, `empty-state`, `new-task-input`, `add-task-btn`)
-- Created `styles.css` (143 lines) covering all required selectors: body, .container, h1, .input-area, input, button, button:disabled, #task-list, li.task-item, input[type="checkbox"], .task-title, .task-title.completed, .delete-btn, .empty-state
-- App shell is ready for JS modules (Plan 02) to wire up storage, renderer, and entry point
+
+- Created `index.html` with all 4 required element IDs (`task-list`, `empty-state`, `new-task-input`, `add-task-btn`) forming the DOM contract for JavaScript modules
+- Created `styles.css` (164 lines) covering all 14 required selectors: body, container, h1, input area, button disabled state, task list, task items, checkbox, task title, completed strikethrough, delete button, and empty state
+- Input area and button set to `disabled` in Phase 1 — wired in Phase 2; `app.js` referenced as module script for later JS work
 
 ## Task Commits
 
 Each task was committed atomically:
 
-1. **Task 1: Create index.html app shell** - `0f2f30f` (feat)
-2. **Task 2: Create styles.css with complete visual styling** - `e0992ee` (feat)
+1. **Task 1: Create index.html app shell** — `1625b78` (feat)
+2. **Task 2: Create styles.css with complete visual styling** — `6cf7e90` (feat)
 
-**Plan metadata:** _(docs commit follows)_
+**Plan metadata:** (docs commit follows)
 
 ## Files Created/Modified
-- `index.html` — Full app shell with semantic structure, all required IDs, disabled input area, module script tag
-- `styles.css` — Complete visual styling: layout, task items, checkbox, strikethrough, empty-state, delete button
+
+- `index.html` — Full app shell: `<head>` with CSS link, container with h1, disabled input area, `<ul id="task-list">`, `<p id="empty-state" hidden>`, and `<script type="module" src="app.js">`
+- `styles.css` — Complete visual styling: layout (body + .container), input area (flex row, button, disabled states), task list (li.task-item flex row), task internals (checkbox, .task-title, .task-title.completed), .delete-btn (red text, hover), .empty-state (centered, italic)
 
 ## Decisions Made
-- Used system sans-serif font stack for native look without external font dependency
-- Chose `#4a90e2` (a standard blue) as the primary color for the Add button and input focus ring
-- `.delete-btn` is styled but not hidden/disabled — the plan specifies "OMIT in Phase 1" means don't render it yet in HTML, but the CSS rule is defined so renderer.js can use it without any CSS changes
-- `hidden` HTML attribute controls empty-state visibility (not `display:none` in CSS) — this is the correct semantic approach and matches how renderer.js will toggle it
+
+- **System font stack** used (`-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif`) for native feel without loading external font assets
+- **Blue #4a90e2** chosen as primary accent color for button and checkbox `accent-color`
+- **`hidden` attribute** (not `display:none`) controls empty-state visibility per plan specification — this means CSS `.empty-state` only handles typography/spacing, not display toggling
+- **`.delete-btn` styled but not disabled** — defined so renderer.js can use it later without CSS changes
 
 ## Deviations from Plan
 
-None - plan executed exactly as written.
+None — plan executed exactly as written.
 
 ## Issues Encountered
-None
+
+None — both files created on first pass, all verification checks passed.
+
+Note: `app.js` does not exist yet (intentional — Phase 1 is static shell only). Browser will log a module load error for `app.js` until Plan 02 creates it. This is expected per plan success criteria: "No console errors on page load (app.js missing is expected at this stage)".
 
 ## User Setup Required
-None - no external service configuration required.
+
+None — no external service configuration required.
 
 ## Next Phase Readiness
-- `index.html` provides all DOM anchors (`#task-list`, `#empty-state`, `#new-task-input`, `#add-task-btn`) that Plan 02 JS modules need
-- `styles.css` defines all visual states — Plan 02 only needs to add/remove classes, no CSS changes expected
-- Ready for `01-02-PLAN.md`: JS modules (storage.js, renderer.js, app.js entry point wiring)
+
+- `index.html` provides stable DOM contract for Plans 02+ — all required IDs present
+- `styles.css` provides complete styling — renderer.js can add `.task-item`, `.task-title`, `.task-title.completed`, `.delete-btn` elements and they will be styled automatically
+- Ready for Plan 02: JS wiring (app.js, renderer.js, storage.js)
 
 ---
 *Phase: 01-foundation-task-display*
-*Completed: 2026-05-12*
+*Completed: 2026-05-29*
 
 ## Self-Check: PASSED
 
-- ✅ `index.html` — exists on disk
-- ✅ `styles.css` — exists on disk
-- ✅ `01-01-SUMMARY.md` — exists on disk
-- ✅ Commit `0f2f30f` — feat(01-01): create index.html app shell
-- ✅ Commit `e0992ee` — feat(01-01): create styles.css with complete visual styling
+- FOUND: index.html ✓
+- FOUND: styles.css ✓
+- FOUND: 01-01-SUMMARY.md ✓
+- FOUND: commit 1625b78 (Task 1) ✓
+- FOUND: commit 6cf7e90 (Task 2) ✓

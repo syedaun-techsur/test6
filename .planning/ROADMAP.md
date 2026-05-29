@@ -13,17 +13,13 @@ Two phases deliver a complete, working to-do app. Phase 1 scaffolds the project 
 Decimal phases appear between their surrounding integers in numeric order.
 
 - [x] **Phase 1: Foundation & Task Display** - Project scaffolded; task list renders from localStorage on load
-- [x] **Phase 2: Full CRUD & Persistence** - Add, complete, and delete tasks with auto-save to localStorage
+- [ ] **Phase 2: Full CRUD & Persistence** - Add, complete, and delete tasks with auto-save to localStorage
 
 ## Phase Details
 
 ### Phase 1: Foundation & Task Display
-<<<<<<< HEAD
-**Status**: In Progress
-**Last Updated**: 2026-05-29T16:30:07Z
-=======
-**Status**: In Progress
->>>>>>> 50ea73a (docs: update planning artifacts [pivota-auto])
+**Status**: completed (2026-05-29)
+**Last Updated**: 2026-05-29T18:11:54Z
 **Goal**: A working static app exists in the browser — users can open it and see their task list (or an empty-state prompt)
 **Depends on**: Nothing (first phase)
 **Requirements**: F0
@@ -63,10 +59,5 @@ Phases execute in numeric order: 1 → 2
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-<<<<<<< HEAD
-| 1. Foundation & Task Display | 2/2 | ✓ Complete | 2026-05-15 |
-| 2. Full CRUD & Persistence | 2/2 | ✓ Complete | 2026-05-29 |
-=======
-| 1. Foundation & Task Display | 0/2 | Not started | - |
+| 1. Foundation & Task Display | 2/2 | Complete | 2026-05-29 |
 | 2. Full CRUD & Persistence | 0/TBD | Not started | - |
->>>>>>> 50ea73a (docs: update planning artifacts [pivota-auto])

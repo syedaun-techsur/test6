@@ -1,3 +1,6 @@
+.nuxt/
+.vite/
+.turbo/
 
 # >>> pivota:gitignore-managed
 # Patterns auto-managed by Pivota — refreshed on every push so coverage
@@ -116,6 +119,3 @@ AGENTS.md
 .opencode.session
 .pivota/
 # <<< pivota:gitignore-managed
-.nuxt/
-.vite/
-.turbo/

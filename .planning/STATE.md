@@ -3,15 +3,15 @@ pivota_spec_state_version: 1.0
 milestone: v1.0
 milestone_name: milestone
 status: planning
-stopped_at: Completed 01-02-PLAN.md
-last_updated: "2026-05-15T14:04:14Z"
-last_activity: 2026-05-15 — Phase 1 complete; all 5 files created; read path functional
+stopped_at: Phase 2 plans created (02-01-PLAN.md, 02-02-PLAN.md)
+last_updated: "2026-05-29T00:00:00Z"
+last_activity: 2026-05-29 — Phase 2 planned; 2 plans created covering F1–F4
 progress:
   total_phases: 2
   completed_phases: 1
-  total_plans: 2
+  total_plans: 4
   completed_plans: 2
-  percent: 100
+  percent: 50
 ---
 
 # Project State
@@ -21,16 +21,16 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-08)
 
 **Core value:** Users can reliably add, complete, and remove tasks from their personal list.
-**Current focus:** Phase 1 — Foundation & Task Display (COMPLETE)
+**Current focus:** Phase 2 — Full CRUD & Persistence (PLANNING COMPLETE — ready to execute)
 
 ## Current Position
 
-Phase: 1 of 2 (Foundation & Task Display) — COMPLETE
-Plan: 2 of 2 in current phase
-Status: Phase 1 complete — ready for Phase 2 planning
-Last activity: 2026-05-15 — Phase 1 complete; all 5 files created; read path functional
+Phase: 2 of 2 (Full CRUD & Persistence) — PLANNED, ready to execute
+Plan: 0 of 2 in current phase
+Status: Phase 2 planned — 2 plans ready for execution
+Last activity: 2026-05-29 — Phase 2 planned; 2 plans created covering F1–F4
 
-Progress: [██████████] 100% (Phase 1 of 2 complete)
+Progress: [█████░░░░░] 50% (Phase 1 complete; Phase 2 planned)
 
 ## Performance Metrics
 

@@ -44,7 +44,11 @@ Plans:
   3. User can click a task's checkbox to toggle it complete/incomplete — the title gains or loses strikethrough immediately
   4. User can click a task's delete button to permanently remove it from the list instantly (no confirmation dialog)
   5. After any add, complete/uncomplete, or delete action, a page refresh restores the exact same task list state
-**Plans**: TBD
+**Plans**: 2 plans
+
+Plans:
+- [ ] 02-01-PLAN.md — Enable input area + add task handler (F1 + F4 write)
+- [ ] 02-02-PLAN.md — Toggle complete + delete task + event delegation (F2 + F3 + F4)
 
 ## Progress
 
@@ -54,4 +58,4 @@ Phases execute in numeric order: 1 → 2
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. Foundation & Task Display | 2/2 | ✓ Complete | 2026-05-15 |
-| 2. Full CRUD & Persistence | 0/TBD | Not started | - |
+| 2. Full CRUD & Persistence | 0/2 | Not started | - |

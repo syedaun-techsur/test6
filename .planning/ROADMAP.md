@@ -35,7 +35,7 @@ Plans:
 - [x] 01-02-PLAN.md — JS modules: storage, renderer, entry point wiring
 
 ### Phase 2: Full CRUD & Persistence
-**Status**: In Progress
+**Status**: executing
 **Goal**: Users can add, complete, and delete tasks — every action is reflected immediately in the UI and persisted automatically to localStorage
 **Depends on**: Phase 1
 **Requirements**: F1, F2, F3, F4

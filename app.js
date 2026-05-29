@@ -23,6 +23,7 @@ function addTask(rawTitle) {
 
   if (!title) {
     validationMsg.hidden = false;
+    // Auto-hide the message after 2 seconds
     setTimeout(() => { validationMsg.hidden = true; }, 2000);
     return;
   }
@@ -33,27 +34,9 @@ function addTask(rawTitle) {
   tasks.push(newTask);
   saveTasks(tasks);
   renderTasks(tasks);
+
+  // Clear the input
   document.getElementById('new-task-input').value = '';
-}
-
-/**
- * Toggle a task's completed state by id.
- * @param {string} id
- */
-function toggleTask(id) {
-  tasks = tasks.map(t => t.id === id ? { ...t, completed: !t.completed } : t);
-  saveTasks(tasks);
-  renderTasks(tasks);
-}
-
-/**
- * Delete a task permanently by id.
- * @param {string} id
- */
-function deleteTask(id) {
-  tasks = tasks.filter(t => t.id !== id);
-  saveTasks(tasks);
-  renderTasks(tasks);
 }
 
 // Load and render tasks when DOM is ready
@@ -70,22 +53,6 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('new-task-input').addEventListener('keydown', (e) => {
     if (e.key === 'Enter') {
       addTask(document.getElementById('new-task-input').value);
-    }
-  });
-
-  // Event delegation for task interactions (toggle + delete)
-  // Single listener on #task-list handles all current and future task items
-  document.getElementById('task-list').addEventListener('change', (e) => {
-    if (e.target.type === 'checkbox') {
-      const li = e.target.closest('li[data-id]');
-      if (li) toggleTask(li.dataset.id);
-    }
-  });
-
-  document.getElementById('task-list').addEventListener('click', (e) => {
-    if (e.target.classList.contains('delete-btn')) {
-      const li = e.target.closest('li[data-id]');
-      if (li) deleteTask(li.dataset.id);
     }
   });
 });

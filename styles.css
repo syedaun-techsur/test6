@@ -137,7 +137,7 @@ input[type="checkbox"] {
 .validation-msg {
   color: #c0392b;
   font-size: 0.85rem;
-  margin: -12px 0 0.5rem;
+  margin: 0 0 0.5rem;
 }
 
 /* =============================================

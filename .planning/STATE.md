@@ -21,7 +21,7 @@ progress:
 See: .planning/PROJECT.md (updated 2026-05-08)
 
 **Core value:** Users can reliably add, complete, and remove tasks from their personal list.
-**Current focus:** COMPLETE — all phases done; full to-do app shipped
+**Current focus:** Phase 2 — Full CRUD & Persistence
 
 ## Current Position
 

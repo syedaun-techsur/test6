@@ -1,26 +1,22 @@
 ---
 phase: 01-foundation-task-display
-verified: 2026-05-15T14:30:00Z
+verified: 2026-05-30T17:10:00Z
 status: passed
 score: 4/4 must-haves verified
 re_verification: false
-gaps: []
 human_verification:
-  - test: "Empty-state message appears on load with no localStorage data"
-    expected: "'No tasks yet — add one above!' is visible centered in italic grey text"
-    why_human: "Requires browser environment to execute DOMContentLoaded + localStorage read"
-  - test: "Tasks in localStorage render with correct checkbox and strikethrough state"
-    expected: "Seeding localStorage with [{id:'1',title:'Buy groceries',completed:false},{id:'2',title:'Walk the dog',completed:true}] and reloading shows both tasks — Walk the dog is checked with strikethrough"
-    why_human: "Requires browser to execute ES module loading and DOM manipulation"
-  - test: "Reload preserves task list from localStorage"
-    expected: "After seeding localStorage and reloading, the exact same tasks re-render without loss"
-    why_human: "localStorage read-on-load cycle requires browser execution"
+  - test: "Open app in browser with empty localStorage — verify empty-state message appears"
+    expected: "Page shows 'No tasks yet — add one above!' centered, italic, muted"
+    why_human: "Browser rendering and visual appearance cannot be verified programmatically"
+  - test: "Seed localStorage with tasks (one complete, one incomplete), reload — verify visual rendering"
+    expected: "Completed task shows checkbox checked + title struck through; incomplete task shows unchecked checkbox + normal title"
+    why_human: "Visual strikethrough effect and checkbox state require browser rendering to confirm end-to-end"
 ---
 
-# Phase 1: Foundation & Task Display — Verification Report
+# Phase 01: Foundation Task Display — Verification Report
 
 **Phase Goal:** A working static app exists in the browser — users can open it and see their task list (or an empty-state prompt)
-**Verified:** 2026-05-15T14:30:00Z
+**Verified:** 2026-05-30T17:10:00Z
 **Status:** ✅ PASSED
 **Re-verification:** No — initial verification
 
@@ -30,12 +26,12 @@ human_verification:
 
 ### Observable Truths
 
-| # | Truth | Status | Evidence |
-|---|-------|--------|----------|
-| 1 | Opening the app shows either a task list or an empty-state message ("No tasks yet — add one above!") | ✓ VERIFIED | `#empty-state` with exact text exists in index.html (hidden attr); renderer.js sets `emptyState.hidden = false` when tasks=0; app.js calls `renderTasks(loadTasks())` on DOMContentLoaded |
-| 2 | Each task displays its title and a visual indicator of whether it is complete (checkbox + strikethrough) | ✓ VERIFIED | renderer.js creates `<input type="checkbox" checked={task.completed}>` + `<span className="task-title completed">` when completed; styles.css has `.task-title.completed { text-decoration: line-through; color: #999; }` |
-| 3 | The app shell (HTML, CSS, JS modules, build tooling) exists and can be served as static files | ✓ VERIFIED | All 5 files exist (index.html, styles.css, storage.js, renderer.js, app.js); pure vanilla HTML/CSS/ES modules — no build tooling required; servable with any static file server |
-| 4 | Reloading the page re-renders the same list from localStorage without data loss | ✓ VERIFIED | app.js calls `loadTasks()` fresh on every DOMContentLoaded; storage.js reads from `localStorage.getItem('todo-tasks')` — data persists in browser storage across reloads; `renderTasks` always clears and re-renders from the loaded array |
+| #   | Truth                                                                                              | Status     | Evidence                                                                                                                  |
+| --- | -------------------------------------------------------------------------------------------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------- |
+| 1   | Opening the app shows either a task list or the empty-state message "No tasks yet — add one above!" | ✓ VERIFIED | `index.html` has `<p id="empty-state" hidden>No tasks yet — add one above!</p>`; `renderer.js` toggles `emptyState.hidden` based on tasks array length |
+| 2   | Each task displays its title and a visual indicator of completion (checkbox + strikethrough)        | ✓ VERIFIED | `renderer.js`: `checkbox.checked = task.completed`; `title.className = task.completed ? 'task-title completed' : 'task-title'`; `styles.css`: `.task-title.completed { text-decoration: line-through; }` |
+| 3   | App shell (HTML, CSS, JS modules) exists and can be served as static files                         | ✓ VERIFIED | All 5 files present: `index.html` (32 lines), `styles.css` (160 lines), `storage.js` (25 lines), `renderer.js` (48 lines), `app.js` (8 lines); vanilla static files, no build tooling required |
+| 4   | Reloading the page re-renders the same list from localStorage without data loss                    | ✓ VERIFIED | `app.js` calls `loadTasks()` on every `DOMContentLoaded`; `storage.js` reads from `'todo-tasks'` key; `loadTasks()` guards against null/corrupt data by returning `[]` |
 
 **Score:** 4/4 truths verified
 
@@ -43,75 +39,70 @@ human_verification:
 
 ## Required Artifacts
 
-### Plan 01 Artifacts (index.html + styles.css)
+### Plan 01-01 Artifacts
 
-| Artifact | Expected | Status | Details |
-|----------|----------|--------|---------|
-| `index.html` | App shell with `id="task-list"`, `id="empty-state"`, `id="new-task-input"`, `id="add-task-btn"` | ✓ VERIFIED | 32 lines; all 4 required IDs confirmed (grep count=4); `<ul id="task-list">`, `<p id="empty-state" hidden>` with exact empty-state text; `<script type="module" src="app.js">` present |
-| `styles.css` | Complete visual styling — layout, task items, checkbox, strikethrough, empty-state | ✓ VERIFIED | 143 lines (≥40 required); all required selectors present: `body`, `.container`, `h1`, `.input-area`, `input`, `button`, `button:disabled`, `#task-list`, `li.task-item`, `input[type="checkbox"]`, `.task-title`, `.task-title.completed { text-decoration: line-through }`, `.delete-btn`, `.empty-state` |
+| Artifact      | Expected                                         | Exists | Lines | Status      | Details                                                                 |
+| ------------- | ------------------------------------------------ | ------ | ----- | ----------- | ----------------------------------------------------------------------- |
+| `index.html`  | App shell with `id="task-list"`, `id="empty-state"` | ✓      | 32    | ✓ VERIFIED  | All 4 required IDs present; `<link href="styles.css">` and `<script type="module" src="app.js">` present |
+| `styles.css`  | Complete styling — layout, tasks, completed, empty-state | ✓ | 160 | ✓ VERIFIED  | ≥40 lines requirement met (160); all required selectors present: `body`, `.container`, `h1`, `.input-area`, `li.task-item`, `input[type="checkbox"]`, `.task-title`, `.task-title.completed`, `.delete-btn`, `.empty-state` |
 
-### Plan 02 Artifacts (storage.js, renderer.js, app.js)
+### Plan 01-02 Artifacts
 
-| Artifact | Expected | Status | Details |
-|----------|----------|--------|---------|
-| `storage.js` | Exports `loadTasks()` returning `Task[]`, `saveTasks(tasks)` persisting them | ✓ VERIFIED | 25 lines; exports both functions; `loadTasks()` reads `'todo-tasks'` key, returns `[]` on empty/null/corrupt (try/catch + Array.isArray guard); `saveTasks` writes JSON — no DOM access (pure utility) |
-| `renderer.js` | Exports `renderTasks(tasks)`, populates `#task-list`, toggles `#empty-state` | ✓ VERIFIED | 48 lines; exports `renderTasks`; clears `list.innerHTML=''` before render; toggles `emptyState.hidden`; builds `<li>` with checkbox (`checked=task.completed`), span (`.task-title completed` class), delete button — zero storage access |
-| `app.js` | Entry point: imports from both modules, calls `renderTasks(loadTasks())` on DOMContentLoaded | ✓ VERIFIED | 8 lines (≥10 specified, but content is substantive — complete wiring); imports both modules; DOMContentLoaded listener calls `loadTasks()` then `renderTasks(tasks)` |
+| Artifact      | Expected                                                       | Exists | Lines | Status      | Details                                                                             |
+| ------------- | -------------------------------------------------------------- | ------ | ----- | ----------- | ----------------------------------------------------------------------------------- |
+| `storage.js`  | `loadTasks()` and `saveTasks()` exported                       | ✓      | 25    | ✓ VERIFIED  | Both functions exported as ES modules; `loadTasks()` returns `[]` on empty/corrupt data; key `'todo-tasks'` used |
+| `renderer.js` | `renderTasks(tasks)` populates `#task-list`, toggles `#empty-state` | ✓ | 48 | ✓ VERIFIED | Exports `renderTasks`; clears `list.innerHTML` before render; toggles `emptyState.hidden`; applies `'task-title completed'` CSS class |
+| `app.js`      | Entry point: loads tasks from storage, renders on DOMContentLoaded | ✓  | 8     | ✓ VERIFIED  | ≥10 lines plan spec — actual 8 lines (plan said ≥10 but content is complete; 2-line DOMContentLoaded listener with `loadTasks()` + `renderTasks()` calls covers the requirement) |
 
 ---
 
 ## Key Link Verification
 
-### Plan 01 Key Links
-
-| From | To | Via | Status | Details |
-|------|----|-----|--------|---------|
-| `index.html` | `styles.css` | `<link>` tag in `<head>` | ✓ WIRED | `<link rel="stylesheet" href="styles.css">` confirmed on line 7 |
-| `index.html` | `app.js` | `<script type="module">` tag | ✓ WIRED | `<script type="module" src="app.js"></script>` confirmed on line 30 |
-
-### Plan 02 Key Links
-
-| From | To | Via | Status | Details |
-|------|----|-----|--------|---------|
-| `app.js` | `storage.js` | ES module import | ✓ WIRED | `import { loadTasks } from './storage.js'` — relative path with `.js` extension |
-| `app.js` | `renderer.js` | ES module import | ✓ WIRED | `import { renderTasks } from './renderer.js'` — relative path with `.js` extension |
-| `renderer.js` | `index.html#task-list` | `document.getElementById('task-list')` | ✓ WIRED | `const list = document.getElementById('task-list')` — result used for `innerHTML` clear and `appendChild` |
-| `renderer.js` | `index.html#empty-state` | `document.getElementById('empty-state')` + hidden toggle | ✓ WIRED | `const emptyState = document.getElementById('empty-state')` — result used in both `emptyState.hidden = false` and `emptyState.hidden = true` branches |
+| From           | To                      | Via                                  | Status      | Evidence                                                          |
+| -------------- | ----------------------- | ------------------------------------ | ----------- | ----------------------------------------------------------------- |
+| `index.html`   | `styles.css`            | `<link>` tag in `<head>`             | ✓ WIRED     | `<link rel="stylesheet" href="styles.css">`                       |
+| `index.html`   | `app.js`                | `<script type="module">` tag         | ✓ WIRED     | `<script type="module" src="app.js"></script>`                    |
+| `app.js`       | `storage.js`            | ES module import                     | ✓ WIRED     | `import { loadTasks } from './storage.js';`                       |
+| `app.js`       | `renderer.js`           | ES module import                     | ✓ WIRED     | `import { renderTasks } from './renderer.js';`                    |
+| `app.js`       | `loadTasks()` → `renderTasks()` | Calls chained in DOMContentLoaded | ✓ WIRED | `const tasks = loadTasks(); renderTasks(tasks);`                  |
+| `renderer.js`  | `index.html#task-list`  | `document.getElementById('task-list')` | ✓ WIRED  | `const list = document.getElementById('task-list');`              |
+| `renderer.js`  | `index.html#empty-state` | `document.getElementById('empty-state')` + hidden toggle | ✓ WIRED | `const emptyState = document.getElementById('empty-state'); emptyState.hidden = false/true;` |
+| `renderer.js`  | `styles.css .task-title.completed` | `className` assignment       | ✓ WIRED     | `title.className = task.completed ? 'task-title completed' : 'task-title';` → triggers `text-decoration: line-through` |
 
 ---
 
 ## Requirements Coverage
 
-| Requirement | Phase 1 Scope | Status | Notes |
-|-------------|--------------|--------|-------|
-| **F0** — User can view all tasks in a list with completion status indicators | ✅ Assigned to Phase 1 | ✓ SATISFIED | Read path fully implemented: load from localStorage → render list with checkbox + strikethrough + empty-state |
-| F1–F4 | Assigned to Phase 2 | ✗ OUT OF SCOPE | CRUD operations correctly deferred; checkbox and delete button rendered but handlers noted `// Phase 2` |
+| Requirement                                              | Status       | Notes                                                              |
+| -------------------------------------------------------- | ------------ | ------------------------------------------------------------------ |
+| F0: User can view all tasks in a list with completion status indicators | ✓ SATISFIED | `renderTasks()` renders title + checkbox (checked state) + strikethrough for completed tasks |
+| Empty-state message when no tasks                        | ✓ SATISFIED  | `emptyState.hidden = false` when `tasks.length === 0`             |
+| Persistence across page reloads                         | ✓ SATISFIED  | `loadTasks()` reads from `localStorage` on every `DOMContentLoaded` |
 
 ---
 
 ## Anti-Patterns Found
 
 | File | Line | Pattern | Severity | Impact |
-|------|------|---------|----------|--------|
-| `renderer.js` | 29, 41 | `// NOTE: onclick handler wired in Phase 2` | ℹ️ Info | **Not a blocker** — Phase 1 goal is read-only; these are intentional deferral comments, not stubs. Checkbox/delete button are visually rendered (correct) but non-functional (correct for Phase 1). |
-| `index.html` | 15 | `placeholder="Add a new task…"` on `disabled` input | ℹ️ Info | **Not a blocker** — `placeholder` here is an HTML attribute for UX (ghosted hint text), not a code placeholder. Input is correctly disabled. |
-| `storage.js` | 10, 15 | `return []` | ℹ️ Info | **Not a stub** — these are correct defensive guards: line 10 handles empty/null localStorage; line 15 handles JSON.parse exceptions. Actual localStorage read exists on line 9. |
+| ---- | ---- | ------- | -------- | ------ |
+| `storage.js` | 10, 15 | `return []` | ℹ️ Info | **Not a stub** — intentional guard clauses for `!raw` and `JSON.parse` failure; correct behavior |
+| `renderer.js` | 29, 41 | `// NOTE: onclick handler wired in Phase 2` | ℹ️ Info | **Not a blocker** — by design; checkbox and delete event handlers intentionally deferred to Phase 2 |
 
-**No blocker or warning anti-patterns found.**
+No blockers. No stubs. The `return []` patterns in `storage.js` are correct defensive programming. The Phase 2 comments are intentional scope markers.
 
 ---
 
 ## Human Verification Required
 
-### 1. Empty-State Message on Clean Load
+### 1. Empty State Visual Rendering
 
-**Test:** Open `index.html` via a local server (`python3 -m http.server 8080`) with no `todo-tasks` key in localStorage. Visit `http://localhost:8080`.
-**Expected:** Page renders the styled app shell; the centered italic message "No tasks yet — add one above!" is visible in the task area.
-**Why human:** Requires a browser to execute `DOMContentLoaded`, call `loadTasks()` (which returns `[]`), then `renderTasks([])` which sets `emptyState.hidden = false`.
+**Test:** Open `index.html` via `python3 -m http.server 8080` → visit `http://localhost:8080` with no `todo-tasks` key in localStorage
+**Expected:** Centered italic muted text reads "No tasks yet — add one above!" — no task list items visible, no JavaScript console errors
+**Why human:** Visual appearance and browser console errors cannot be verified programmatically
 
-### 2. Task List Renders from localStorage
+### 2. Populated Task List with Completion States
 
-**Test:** In DevTools console run:
+**Test:** Open DevTools console and run:
 ```js
 localStorage.setItem('todo-tasks', JSON.stringify([
   { id: '1', title: 'Buy groceries', completed: false },
@@ -119,32 +110,26 @@ localStorage.setItem('todo-tasks', JSON.stringify([
 ]));
 location.reload();
 ```
-**Expected:** Two task rows appear. "Buy groceries" shows an unchecked checkbox and normal text. "Walk the dog" shows a checked checkbox and strikethrough grey text.
-**Why human:** Requires browser DOM rendering and CSS application to verify the visual appearance of `checked` attribute and `.task-title.completed` class.
-
-### 3. Reload Persistence
-
-**Test:** After seeding tasks per Test 2 above, reload the page a second time (F5 / Cmd+R).
-**Expected:** The same two tasks appear again — no data loss, no console errors.
-**Why human:** localStorage persistence across page loads is a browser-only behavior.
+**Expected:** Two task items rendered — "Buy groceries" with unchecked checkbox; "Walk the dog" with checked checkbox and struck-through title. Delete buttons (✕) visible but non-functional.
+**Why human:** Visual strikethrough, checkbox checked state, and end-to-end browser rendering cannot be verified without a browser
 
 ---
 
-## Gaps Summary
+## Summary
 
-No gaps. All phase-1 goal requirements are met:
+Phase 01 goal is **fully achieved**. All 5 required files exist with substantive implementations — no stubs, no empty returns, no placeholder content. Every key link in the data flow is wired:
 
-- **All 5 source files exist** and pass substantive content checks (not stubs)
-- **All 6 key links are wired** — import chain from index.html → app.js → storage.js/renderer.js → DOM is intact
-- **Requirement F0** (view tasks with completion indicators) is fully satisfied by the read path
-- **Empty-state logic** is complete: `renderTasks([])` shows the correct message; populated tasks render with checkbox and strikethrough
-- **localStorage persistence** is correctly implemented: `loadTasks()` reads on every DOMContentLoaded; `saveTasks()` is available for Phase 2
-- **No blocker anti-patterns** — Phase 2 deferral comments are intentional and appropriate
-- **One minor note:** `app.js` is 8 lines vs. the plan's `min_lines: 10` — however the file is fully substantive and complete (the 2-line shortfall is a counting artifact, not missing functionality)
+- **HTML shell** (`index.html`) provides all required DOM anchors and loads CSS + JS correctly
+- **CSS** (`styles.css`, 160 lines) covers all app states: normal tasks, completed tasks (strikethrough), empty-state, input area
+- **Storage** (`storage.js`) correctly reads/writes `localStorage` with defensive error handling
+- **Renderer** (`renderer.js`) correctly populates `#task-list` and toggles `#empty-state` visibility
+- **Entry point** (`app.js`) correctly wires storage → renderer on `DOMContentLoaded`
 
-Three human verification items remain for visual/browser confirmation but are not expected to reveal issues given the verified wiring.
+The read path is complete. Opening the app with tasks in localStorage will render them with correct completion indicators. Opening with no tasks will show the empty-state message. Reloading preserves state by re-reading from localStorage.
+
+All 4 documented commit hashes (`5418696`, `b1fc447`, `272b7dc`, `1d2c9f0`) are verified as existing in the repository.
 
 ---
 
-_Verified: 2026-05-15T14:30:00Z_
+_Verified: 2026-05-30T17:10:00Z_
 _Verifier: Claude (pivota_spec-verifier)_
